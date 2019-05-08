@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Stripe Checkout Integration</title>
+   
+  </head>
+
+  <body>
+    <h2>Stripe Checkout Example</h2>
+    <form action="/charge" method="POST">
+
+        <script 
+        src="https://checkout.stripe.com/checkout.js"
+        class="stripe-button"
+        data-key="pk_test_bCmXwoxRy8zOJNHtMllynipN001tPiXGnY"
+        data-amount="2000"
+        data-name="Demo Site"
+        data-description="2 widgets ($20.00)"
+        >
+    </script>
+
+    </form>
+    <form action="/pay" method="POST">
+      <input type="text" name="payamount"/>
+      <button type="submit">Pay to bank account</button>
+    </form>
+  </body>
+
+ 
+</html>
