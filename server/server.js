@@ -16,7 +16,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(upload())
 app.use(cors())
 
-const stripe = require("stripe")("sk_test_WIDbNgjPOwguVDYr4Qmm3NOC007XDCoeX4");
+const stripe = require("stripe")("");
 
 // create an express route for the home page
 // http://localhost:8080/
