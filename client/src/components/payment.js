@@ -1,9 +1,6 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
 import StripeCheckout from "react-stripe-checkout";
-import Routing from './Routing'
-class App extends   React.Component 
+class Payment extends   React.Component 
 {
 
   onToken = (token)=>{
@@ -34,10 +31,19 @@ class App extends   React.Component
   
   render() {
     return (
-      <div className="App">
-      <Routing />
+      <div>
+    <StripeCheckout
+      label="Go Premium" //Component button text
+      name="Business LLC" //Modal Header
+      description="Upgrade to a premium account today."
+      panelLabel="Go Premium" //Submit button in modal
+      token={this.onToken}
+      stripeKey={"pk_test_bCmXwoxRy8zOJNHtMllynipN001tPiXGnY"}
+      image="https://www.vidhub.co" //Pop-in header image
+      billingAddress={false}
+    />
       </div>
     );
   }
 }
-export default App;
+export default Payment;

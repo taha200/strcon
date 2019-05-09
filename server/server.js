@@ -107,35 +107,39 @@ res.sendFile('index.html',{root:path.join(__dirname)});
   
 // }
 // })
-app.post("/charge", (req, res) => {
- console.log(req.body)
+// pp.post("/charge", (req, res) => {
+//  console.log(req.body)
 
  
- stripe.customers.create({
-  email:req.body.stripeEmail,
-  source:req.body.stripeToken
-}).then((customer) => {
-  return stripe.charges.create({
-    amount: 1500,
-    currency: "usd",
-    source: "tok_visa",
-    application_fee_amount: 150,
-  }, {
-    stripe_account: "acct_1EXo6WFn9Jy4C90X",
-  }).then(function(charge) {
-    res.send('success')
-  });
-});  
-});
+//  stripe.customers.create({
+//   email:req.body.stripeEmail,
+//   source:req.body.stripeToken
+// }).then((customer) => {
+//   return stripe.charges.create({
+//     amount: 1500,
+//     currency: "usd",
+//     source: "tok_visa",
+//     application_fee_amount: 150,
+//   }, {
+//     stripe_account: "acct_1EXo6WFn9Jy4C90X",
+//   }).then(function(charge) {
+//     res.send('success')
+//   });
+// });  
+// });a
 app.post("/pay",(req,res)=>{
-  stripe.payouts.create(
-    {
-      amount:req.body.amount,
-      currency: 'usd',
-      method: 'instant',
-    },
-    {stripe_account: "acct_1EXo6WFn9Jy4C90X"}
-  );
+  // stripe.payouts.create(
+  //   {
+  //     amount:req.body.amount,
+  //     currency: 'usd',
+  //     method: 'instant',
+  //   },
+  //   {stripe_account: "acct_1EXo6WFn9Jy4C90X"}
+  // );
+  stripe.balance.retrieve(function(err, balance) {
+    console.log(balance)
+  });
+  
 });
 //start the server on port 8080
 app.post('/paym',(req,res)=>{
@@ -156,6 +160,26 @@ app.post('/paym',(req,res)=>{
       res.send('success')
     });
   });  
+})
+app.post('/createacc',(req,res)=>{
+  stripe.accounts.create(req.body, function(err, account) {
+    console.log(account)
+  });
+})
+app.post('/createexternalacc',(req,res)=>{
+  stripe.tokens.create({
+    bank_account:req.body
+  }, function(err, token) {
+    stripe.accounts.createExternalAccount(
+      'acct_1EYC5ZDAqMSJ2Skn',
+      {
+        external_account:token.id,
+      },
+      function(err, bank_account) {
+        // asynchronously called
+      }
+    );
+  });
 })
 app.listen(8000)
 // send a message
